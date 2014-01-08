@@ -1,13 +1,9 @@
-﻿Build started 1/6/2014 9:43:45 PM.
+﻿Build started 1/7/2014 8:35:08 PM.
      1>Project "C:\Users\Noah\Noah\Programing\Direct X\Workspace\Hello_DirectX\Hello_DirectX\Hello_DirectX.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt winmain.cpp
-         winmain.cpp
-     1>c:\users\noah\noah\programing\direct x\workspace\hello_directx\hello_directx\winmain.cpp(56): warning C4002: too many actual parameters for macro 'CreateWindowA'
-     1>c:\users\noah\noah\programing\direct x\workspace\hello_directx\hello_directx\winmain.cpp(56): error C2664: 'HWND CreateWindowExA(DWORD,LPCSTR,LPCSTR,DWORD,int,int,int,int,HWND,HMENU,HINSTANCE,LPVOID)' : cannot convert argument 9 from 'int' to 'HWND'
-                 Conversion from integral type to pointer type requires reinterpret_cast, C-style cast or function-style cast
-     1>Done Building Project "C:\Users\Noah\Noah\Programing\Direct X\Workspace\Hello_DirectX\Hello_DirectX\Hello_DirectX.vcxproj" (Build target(s)) -- FAILED.
+     1>Link:
+         Hello_DirectX.vcxproj -> C:\Users\Noah\Noah\Programing\Direct X\Workspace\Hello_DirectX\Debug\Hello_DirectX.exe
+     1>Done Building Project "C:\Users\Noah\Noah\Programing\Direct X\Workspace\Hello_DirectX\Hello_DirectX\Hello_DirectX.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.60
+Time Elapsed 00:00:00.12
