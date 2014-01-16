@@ -65,11 +65,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DXApp.cpp" />
+    <ClCompile Include="DXERR\dxerr.cpp" />
     <ClCompile Include="DXUtil.cpp" />
     <ClCompile Include="winmain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DXApp.h" />
+    <ClInclude Include="DXERR\dxerr.h" />
     <ClInclude Include="DXUtil.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
