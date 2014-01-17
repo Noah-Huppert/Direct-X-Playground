@@ -18,8 +18,8 @@ DXApp::DXApp(HINSTANCE hInstance)//Init vars
 {
 	m_hAppInstance = hInstance;//Handle to win32 app
 	m_hAppWnd = NULL;
-	m_ClientWidth = 800;//Width
-	m_ClientHeight = 600;//Height
+	//m_ClientWidth = 800;//Width
+	//m_ClientHeight = 600;//Height
 	m_AppTitle = "DirectX11 App";//App Title
 	m_WndStyle = WS_OVERLAPPEDWINDOW;//Window style, includes basic window styles(3 buttons on top, reizable, ect)
 	g_pApp = this;
@@ -33,12 +33,19 @@ DXApp::DXApp(HINSTANCE hInstance)//Init vars
 
 DXApp::~DXApp()//Destructor
 {
+	//Switch to windowed mod
+	m_pSwapChain->SetFullscreenState(FALSE, NULL);//switch to windowed mode, input 1 is the mode you want to switch to(FALSE = windowed, TRUE = fullscreen)
+
 	//Cleanup directx
 	if (m_pImmediateContext) m_pImmediateContext->ClearState();
 	Memory::SafeRelease(m_pRenderTargetView);
 	Memory::SafeRelease(m_pSwapChain);
 	Memory::SafeRelease(m_pImmediateContext);
 	Memory::SafeRelease(m_pDevice);
+
+	//Clean up buffers
+	Memory::SafeRelease(pVS);
+	Memory::SafeRelease(pPS);
 }
 
 int DXApp::Run(){//Main loop
@@ -46,10 +53,10 @@ int DXApp::Run(){//Main loop
 	MSG msg = { 0 };//Init empty array?
 
 	while (WM_QUIT != msg.message){//Runs basic app loop while the message to close the app hasnt been called
-		if (PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE)){//Looks at the next message, stores it, deletes it
-			TranslateMessage(&msg);//Translate message to readable strings(Like key codes into readable keys)
-			DispatchMessage(&msg);//Send message to window to be dealt with
-			//^^I think this means it makes it localy usable, b/c I think messages come from the os and then the message have to be shot into a part in a program
+		if (PeekMessage(&msg, NULL, NULL, NULL, PM_REMOVE)){//Looks at the next message, stores it, deletes it. 
+			//^^Unlike getMessage() it doesn't wait for a message(So we can do other things while waiting)
+			TranslateMessage(&msg);//Translate to keystrokes
+			DispatchMessage(&msg);//Send message to messageProc to be dealt with
 		}
 		else{
 			//Update
@@ -72,6 +79,10 @@ bool DXApp::Init(){//Init everything, first run
 		return false;//Exit if Direct is properly setup
 	}
 
+	if (!InitPipeline()){//Init render pipeline
+		return false;//Exit if Render pipeline isn't created correctly
+	}
+
 	return true;//If everything goes well then return true
 }
 
@@ -88,7 +99,8 @@ bool DXApp::InitWindow(){//Shows win32 window
 	wcex.lpfnWndProc = MainWndProc;
 	wcex.hIcon = LoadIcon(NULL, IDI_APPLICATION);
 	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH);
+	//wcex.hbrBackground = (HBRUSH)GetStockObject(NULL_BRUSH);
+	//^^Commented out for full screen mode
 	wcex.lpszMenuName = NULL;
 	wcex.lpszClassName = "Hello_DirectX11";
 	wcex.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
@@ -99,7 +111,7 @@ bool DXApp::InitWindow(){//Shows win32 window
 	}
 
 	//Adjust height to acomidate top bar
-	RECT r = { 0, 0, m_ClientWidth, m_ClientHeight };
+	RECT r = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 	AdjustWindowRect(&r, m_WndStyle, FALSE);
 	UINT width = r.right - r.left;
 	UINT height = r.bottom - r.top;
@@ -160,8 +172,8 @@ bool DXApp::InitDirect3D(){//Setup DirectX 3D
 	DXGI_SWAP_CHAIN_DESC swapDesc;//Setting up buffer
 	ZeroMemory(&swapDesc, sizeof(DXGI_SWAP_CHAIN_DESC));//Make space for swapchain desc
 	swapDesc.BufferCount = 1;//Double buffer(While 1 frame is being displayed render another) uses array counting where 0 = 1
-	swapDesc.BufferDesc.Width = m_ClientWidth;//Set up render width
-	swapDesc.BufferDesc.Height = m_ClientHeight;//Set up render height
+	swapDesc.BufferDesc.Width = SCREEN_WIDTH;//Set up render width
+	swapDesc.BufferDesc.Height = SCREEN_HEIGHT;//Set up render height
 	swapDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;//Set color endcoding(Or something like that)
 	swapDesc.BufferDesc.RefreshRate.Numerator = 60;//60 FPS
 	swapDesc.BufferDesc.RefreshRate.Denominator = 1;//Minimum FPS
@@ -210,8 +222,8 @@ bool DXApp::InitDirect3D(){//Setup DirectX 3D
 
 	//Viewport creation
 	//Create Direct X viewport on window
-	m_Viewport.Width = static_cast<float>(m_ClientWidth);//Sets viewport width
-	m_Viewport.Height = static_cast<float>(m_ClientHeight);//Sets viewport height
+	m_Viewport.Width = static_cast<float>(SCREEN_WIDTH);//Sets viewport width
+	m_Viewport.Height = static_cast<float>(SCREEN_HEIGHT);//Sets viewport height
 	m_Viewport.TopLeftX = 0;//Sets viewport to start in left
 	m_Viewport.TopLeftY = 0;//Sets viewport to start in top
 	m_Viewport.MinDepth = 0.0f;//Min depth
@@ -220,6 +232,71 @@ bool DXApp::InitDirect3D(){//Setup DirectX 3D
 	//Bind viewport
 	m_pImmediateContext->RSSetViewports(1, &m_Viewport);//Set viewport to display on win32 window
 	return true;//If all succeeds return true
+}
+
+bool DXApp::InitPipeline(){//Init the render pipeline
+
+	//Shadders
+	//Load and compile 2 shaders
+	D3DCompile(//Vertex Shader
+		L"shaders.hlsl",//Pointer to shader data
+		sizeof(L"shaders.hlsl"),//Shader size
+		NULL,//OPTIONAL, name used in error msgs
+		NULL,//OPTIONAL,  An array of NULL-terminated macro definitions(wut?)
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,//OPTIONAL, DONT PASS NULL, pass D3D_COMPILE_STANDARD_FILE_INCLUDE which is the defualt
+		"VShader",//Name of shaders starting function
+		"vs_5_0",//Shader target, vs_5_0 for vertex shader and ps_5_0 for pixel shader
+		NULL,//Shader compile options --> http://msdn.microsoft.com/en-us/library/windows/apps/gg615083(v=vs.85).aspx, set to NULL
+		0,//Shader effect compile options --> http://msdn.microsoft.com/en-us/library/windows/apps/gg615084(v=vs.85).aspx, set to 0
+		&VS,//Pointer to var that will hold shader
+		NULL//OPTIONAL, Pointer to var that holds error messages
+		);
+
+	D3DCompile(//Pixel Shader
+		L"shaders.hlsl",//Pointer to shader data
+		sizeof(L"shaders.hlsl"),//Shader size
+		NULL,//OPTIONAL, name used in error msgs
+		NULL,//OPTIONAL,  An array of NULL-terminated macro definitions(wut?)
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,//OPTIONAL, DONT PASS NULL, pass D3D_COMPILE_STANDARD_FILE_INCLUDE which is the defualt
+		"PShader",//Name of shaders starting function
+		"ps_5_0",//Shader target, vs_5_0 for vertex shader and ps_5_0 for pixel shader
+		NULL,//Shader compile options --> http://msdn.microsoft.com/en-us/library/windows/apps/gg615083(v=vs.85).aspx, set to NULL
+		0,//Shader effect compile options --> http://msdn.microsoft.com/en-us/library/windows/apps/gg615084(v=vs.85).aspx, set to 0
+		&PS,//Pointer to var that will hold shader
+		NULL//OPTIONAL, Pointer to var that holds error messages
+		);
+
+	//Encapsulate both shaders in shader objects
+	m_pDevice->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &pVS);
+	m_pDevice->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &pPS);
+
+	//Set the shader objects
+	m_pImmediateContext->VSSetShader(pVS, 0, 0);
+	m_pImmediateContext->PSSetShader(pPS, 0, 0);
+
+	//For playing around
+	VERTEX OurVertices[] =
+	{
+		{ 0.0f, 0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ 0.45f, -0.5, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ -0.45f, -0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } }
+	};
+
+	//Vertex buffer description
+	ZeroMemory(&bd, sizeof(bd));//Reserve memory for Vertex buffer description
+	bd.Usage = D3D11_USAGE_DYNAMIC;//Write access, access by CPU and GPU
+	bd.ByteWidth = sizeof(VERTEX) * 3;//Size of vertex struct * 3(x3 b/c x,y,z)
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;//Use as a vertex buffer
+	bd.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;//Allow CPU to write buffer
+
+	m_pDevice->CreateBuffer(&bd, NULL, &pVBuffer);//Create vertex buffer
+
+	//Working with vertex buffer
+	m_pImmediateContext->Map(pVBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);//Map the buffer, pVBuffer is the buffer and ms is where we will put the buffer
+	memcpy(ms.pData, OurVertices, sizeof(OurVertices));//Copy data to mapped buffer
+	m_pImmediateContext->Unmap(pVBuffer, NULL);//Unmap buffer, allowing GPU to use buffer
+
+	return true;//Return true on success
 }
 
 LRESULT DXApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){//Recieving messages(Input) from os
