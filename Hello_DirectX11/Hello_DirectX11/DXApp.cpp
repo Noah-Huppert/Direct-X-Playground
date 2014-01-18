@@ -236,11 +236,13 @@ bool DXApp::InitDirect3D(){//Setup DirectX 3D
 
 bool DXApp::InitPipeline(){//Init the render pipeline
 
-	//Shadders
+	//Shaders
 	//Load and compile 2 shaders
-	D3DCompile(//Vertex Shader
-		L"shaders.hlsl",//Pointer to shader data
-		sizeof(L"shaders.hlsl"),//Shader size
+
+	/* Compile */
+	HR(D3DCompile(//Vertex Shader
+		shaderText,//Pointer to shader data
+		sizeof(shaderText),//Shader size
 		NULL,//OPTIONAL, name used in error msgs
 		NULL,//OPTIONAL,  An array of NULL-terminated macro definitions(wut?)
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,//OPTIONAL, DONT PASS NULL, pass D3D_COMPILE_STANDARD_FILE_INCLUDE which is the defualt
@@ -250,9 +252,25 @@ bool DXApp::InitPipeline(){//Init the render pipeline
 		0,//Shader effect compile options --> http://msdn.microsoft.com/en-us/library/windows/apps/gg615084(v=vs.85).aspx, set to 0
 		&VS,//Pointer to var that will hold shader
 		NULL//OPTIONAL, Pointer to var that holds error messages
-		);
+		));
+	/* ------------------------------ */
 
-	D3DCompile(//Pixel Shader
+	/* Compile From File */
+	/*LPCWSTR src = L"shaders.hlsl";
+	HR(D3DCompileFromFile(
+		src,
+		NULL,
+		NULL,
+		"VShader/0",
+		"vs_5_0",
+		0,
+		0,
+		&VS,
+		nullptr
+		));*/
+	/* ------------------------------ */
+
+	/*D3DCompile(//Pixel Shader
 		L"shaders.hlsl",//Pointer to shader data
 		sizeof(L"shaders.hlsl"),//Shader size
 		NULL,//OPTIONAL, name used in error msgs
@@ -264,11 +282,11 @@ bool DXApp::InitPipeline(){//Init the render pipeline
 		0,//Shader effect compile options --> http://msdn.microsoft.com/en-us/library/windows/apps/gg615084(v=vs.85).aspx, set to 0
 		&PS,//Pointer to var that will hold shader
 		NULL//OPTIONAL, Pointer to var that holds error messages
-		);
-
+		);*/
+	
 	//Encapsulate both shaders in shader objects
-	m_pDevice->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &pVS);
-	m_pDevice->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &pPS);
+	HR(m_pDevice->CreateVertexShader(VS->GetBufferPointer(), VS->GetBufferSize(), NULL, &pVS));//UNHANDLED READ EXCPETION ON GetBufferPointer() and GetBufferSize()
+	/*m_pDevice->CreatePixelShader(PS->GetBufferPointer(), PS->GetBufferSize(), NULL, &pPS);
 
 	//Set the shader objects
 	m_pImmediateContext->VSSetShader(pVS, 0, 0);
@@ -279,7 +297,7 @@ bool DXApp::InitPipeline(){//Init the render pipeline
 	{
 		{ 0.0f, 0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
 		{ 0.45f, -0.5, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ -0.45f, -0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } }
+		{ -0.45f,  -0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } }
 	};
 
 	//Vertex buffer description
@@ -296,6 +314,16 @@ bool DXApp::InitPipeline(){//Init the render pipeline
 	memcpy(ms.pData, OurVertices, sizeof(OurVertices));//Copy data to mapped buffer
 	m_pImmediateContext->Unmap(pVBuffer, NULL);//Unmap buffer, allowing GPU to use buffer
 
+
+	D3D11_INPUT_ELEMENT_DESC ied[] =//Describe to CPU how data is stored
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+
+	m_pDevice->CreateInputLayout(ied, 2, VS->GetBufferPointer(), VS->GetBufferSize(), &pLayout);
+	m_pImmediateContext->IASetInputLayout(pLayout);//Set layout, aply
+	*/
 	return true;//Return true on success
 }
 
