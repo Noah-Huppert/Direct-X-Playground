@@ -1,4 +1,6 @@
-CPP-SandBoc
+CPP-SandBox
 ===========
 
-Where I put all my C++ code
+Where I put all my C++ code  
+
+Mainly exist for version control 
