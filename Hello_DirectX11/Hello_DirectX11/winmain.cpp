@@ -32,15 +32,15 @@ void TestApp::Update(float dt){//Custom update function
 
 void TestApp::Render(float dt){//Custom render function
 	m_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView, DirectX::Colors::CornflowerBlue);//Clear background to blue
-		/*
+		
 		//Actual rendering
 		stride = sizeof(VERTEX);//Size of VERTEX
 		offset = 0;//Offset in which we start reading VERTEX bytes
 
 		m_pImmediateContext->IASetVertexBuffers(0, 1, &pVBuffer, &stride, &offset);//Tells GPU which vertices to read
-		m_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);//Tells the GPU what type of geomitry to render(Points, Line segments, line, triangle, triangle strip).
+		m_pImmediateContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);//Tells the GPU what type of geomitry to render(Points, Line segments, line, triangle, triangle strip).
 		m_pImmediateContext->Draw(3, 0);//Draw 3 vertices  and start at vertice 0
-		*/
+		
 	HR(m_pSwapChain->Present(0, 0));//Display background(From buffer)
 }
 

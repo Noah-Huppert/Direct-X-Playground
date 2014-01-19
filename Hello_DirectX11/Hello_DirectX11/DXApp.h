@@ -43,33 +43,14 @@ protected://Internal Vars
 	D3D11_VIEWPORT			m_Viewport;
 
 	//Pipeline
-	ID3D10Blob *VS;//Vertex shader pointer
-	ID3D10Blob *PS;//Pixel shader pointer
-	ID3D11VertexShader *pVS;//Vertex shader
-	ID3D11PixelShader *pPS;//Pixel shader
+	WCHAR* shaderPath = L"shaders.hlsl";//Path of shader file
+	DWORD shaderFlags = D3DCOMPILE_ENABLE_STRICTNESS;//Flags for compiling a shader
 
-	LPCVOID shaderText = " \
-	struct VOut \
-	{ \
-		float4 position : SV_POSITION; \
-		float4 color : COLOR; \
-	}; \
-	\
-	VOut VShader(float4 position : POSITION, float4 color : COLOR) \
-	{ \
-		VOut output; \
-	\
-		output.position = position; \
-		output.color = color; \
-	\
-		return output; \
-	} \
-	\
-	\
-	float4 PShader(float4 position : SV_POSITION, float4 color : COLOR) : SV_TARGET \
-	{ \
-		return color; \
-	}";
+	ID3D10Blob *VS = nullptr;//Vertex shader pointer
+	ID3D10Blob *PS = nullptr;//Pixel shader pointer
+	ID3D11VertexShader *pVS = nullptr;//Vertex shader
+	ID3D11PixelShader *pPS = nullptr;//Pixel shader
+
 
 	ID3D11Buffer *pVBuffer;//Vertex buffer for copying over to graphics card
 	D3D11_BUFFER_DESC bd;//Vertex buffer description
