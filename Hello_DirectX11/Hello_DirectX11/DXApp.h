@@ -8,6 +8,7 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
 
+
 class DXApp
 {
 public:
@@ -78,4 +79,11 @@ struct VERTEX//Vertex struct
 	FLOAT Y;
 	FLOAT Z;//Position
 	float COLOR[4];//Color, replaces D3DXCOLOR which was just a float array with 4 entries
+};
+
+struct VECTOR3
+{
+	float X;
+	float Y;
+	float Z;
 };

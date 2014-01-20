@@ -1,50 +1,56 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Model">
+      <UniqueIdentifier>{c4f2cb35-6dd8-4fce-9cb6-df8fb0383dfd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="View">
+      <UniqueIdentifier>{f321151f-d1a9-4a23-ab82-3288abada9a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Controller">
+      <UniqueIdentifier>{7368c19a-9c53-4f36-80a1-22835b0003f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{20995ae3-5164-42b6-a27a-ac7d32a17967}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\DXERR">
+      <UniqueIdentifier>{ef3bcaed-73a5-4faa-a13d-3e1eb1ae77fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shaders">
+      <UniqueIdentifier>{e9fd7ec9-1f9b-4f2b-a015-b46fc430507f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="winmain.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Controller</Filter>
     </ClCompile>
     <ClCompile Include="DXApp.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>View</Filter>
     </ClCompile>
     <ClCompile Include="DXUtil.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Controller</Filter>
     </ClCompile>
     <ClCompile Include="DXERR\dxerr.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Resources\DXERR</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DXApp.h">
-      <Filter>Header Files</Filter>
+      <Filter>View</Filter>
     </ClInclude>
     <ClInclude Include="DXUtil.h">
-      <Filter>Header Files</Filter>
+      <Filter>Controller</Filter>
     </ClInclude>
     <ClInclude Include="DXERR\dxerr.h">
-      <Filter>Header Files</Filter>
+      <Filter>Resources\DXERR</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="D3DCompile explained.txt" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shaders.hlsl">
-      <Filter>Resource Files</Filter>
+      <Filter>Resources\Shaders</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
