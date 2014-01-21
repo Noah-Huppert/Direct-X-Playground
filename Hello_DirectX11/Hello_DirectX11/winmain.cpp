@@ -32,45 +32,47 @@ void TestApp::Update(float dt){//Custom update function
 
 void TestApp::Render(float dt){//Custom render function
 	m_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView, DirectX::Colors::CornflowerBlue);//Clear background to blue
-		
-		//Actual rendering
-		stride = sizeof(VERTEX);//Size of VERTEX
-		offset = 0;//Offset in which we start reading VERTEX bytes
 
-		VERTEX OurVertices[] =
-		{
-			{ 0.0f, 0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-			{ 0.45f, -0.5, 0.0f, { 0.0f, 1.0f, 1.0f, 0.0f } },
-			{ -0.45f, -0.5f, 0.0f, { 0.0f, 0.0f, 1.0f, 1.0f } }
-		};
+	//Actual rendering
+	stride = sizeof(VERTEX);//Size of VERTEX
+	offset = 0;//Offset in which we start reading VERTEX bytes
+
+	VERTEX OurVertices[] =
+	{
+	{ 0.0f, 0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+	{ 0.45f, -0.5, 0.0f, { 0.0f, 1.0f, 1.0f, 0.0f } },
+	{ -0.45f, -0.5f, 0.0f, { 0.0f, 0.0f, 1.0f, 1.0f } },
+	{ -0.5f, 0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+	{ -0.1f, -0.5, 0.0f, { 0.0f, 1.0f, 1.0f, 0.0f } },
+	{ -1.0f, -0.5f, 0.0f, { 0.0f, 0.0f, 1.0f, 1.0f } }
+	};
 
 
-		m_pImmediateContext->Map(pVBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);//Map the buffer, pVBuffer is the buffer and ms is where we will put the buffer
-		memcpy(ms.pData, OurVertices, sizeof(OurVertices));//Copy data to mapped buffer
-		m_pImmediateContext->Unmap(pVBuffer, NULL);//Unmap buffer, allowing GPU to use buffer
+	m_pImmediateContext->Map(pVBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);//Map the buffer, pVBuffer is the buffer and ms is where we will put the buffer
+	memcpy(ms.pData, OurVertices, sizeof(OurVertices));//Copy data to mapped buffer
+	m_pImmediateContext->Unmap(pVBuffer, NULL);//Unmap buffer, allowing GPU to use buffer
+
+	m_pImmediateContext->IASetVertexBuffers(0, 1, &pVBuffer, &stride, &offset);//Tells GPU which vertices to read
+	m_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);//Tells the GPU what type of geomitry to render(Points, Line segments, line, triangle, triangle strip).
+	m_pImmediateContext->Draw(6, 0);//Draw 3 vertices  and start at vertice 0
+	
+	/********************************************/
+	/*NEW RENDERING
+	stride = sizeof(VERTEX);//Size of VERTEX
+	offset = 0;//Offset in which we start reading VERTEX bytes
+
+	VERTEX Vertices[] =
+	{
+		{ 0.0f, 0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ 0.45f, -0.5, 0.0f, { 0.0f, 1.0f, 1.0f, 0.0f } },
+		{ -0.45f, -0.5f, 0.0f, { 0.0f, 0.0f, 1.0f, 1.0f } }
+	};
 
 		m_pImmediateContext->IASetVertexBuffers(0, 1, &pVBuffer, &stride, &offset);//Tells GPU which vertices to read
 		m_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);//Tells the GPU what type of geomitry to render(Points, Line segments, line, triangle, triangle strip).
-		m_pImmediateContext->Draw(3, 0);//Draw 3 vertices  and start at vertice 0
-
-		/********************************************/
-		VERTEX OurVertices1[] =
-		{
-			{ -0.5f, 0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-			{ -0.1f, -0.5, 0.0f, { 0.0f, 1.0f, 1.0f, 0.0f } },
-			{ -1.0f, -0.5f, 0.0f, { 0.0f, 0.0f, 1.0f, 1.0f } }
-		};
-
-
-		m_pImmediateContext->Map(pVBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);//Map the buffer, pVBuffer is the buffer and ms is where we will put the buffer
-		memcpy(ms.pData, OurVertices1, sizeof(OurVertices1));//Copy data to mapped buffer
-		m_pImmediateContext->Unmap(pVBuffer, NULL);//Unmap buffer, allowing GPU to use buffer
-
-		m_pImmediateContext->IASetVertexBuffers(0, 1, &pVBuffer, &stride, &offset);//Tells GPU which vertices to read
-		m_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);//Tells the GPU what type of geomitry to render(Points, Line segments, line, triangle, triangle strip).
-		m_pImmediateContext->Draw(3, 0);//Draw 3 vertices  and start at vertice 0
-
-		
+		m_pImmediateContext->Draw(6, 0);//Draw 3 vertices  and start at vertice 0
+		m_pImmediateContext->Draw(6, 0);//Draw 3 vertices  and start at vertice 0
+		*/
 	HR(m_pSwapChain->Present(0, 0));//Display background(From buffer)
 }
 
