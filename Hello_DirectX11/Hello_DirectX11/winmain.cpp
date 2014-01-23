@@ -56,23 +56,6 @@ void TestApp::Render(float dt){//Custom render function
 	m_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);//Tells the GPU what type of geomitry to render(Points, Line segments, line, triangle, triangle strip).
 	m_pImmediateContext->Draw(6, 0);//Draw 3 vertices  and start at vertice 0
 	
-	/********************************************/
-	/*NEW RENDERING
-	stride = sizeof(VERTEX);//Size of VERTEX
-	offset = 0;//Offset in which we start reading VERTEX bytes
-
-	VERTEX Vertices[] =
-	{
-		{ 0.0f, 0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ 0.45f, -0.5, 0.0f, { 0.0f, 1.0f, 1.0f, 0.0f } },
-		{ -0.45f, -0.5f, 0.0f, { 0.0f, 0.0f, 1.0f, 1.0f } }
-	};
-
-		m_pImmediateContext->IASetVertexBuffers(0, 1, &pVBuffer, &stride, &offset);//Tells GPU which vertices to read
-		m_pImmediateContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);//Tells the GPU what type of geomitry to render(Points, Line segments, line, triangle, triangle strip).
-		m_pImmediateContext->Draw(6, 0);//Draw 3 vertices  and start at vertice 0
-		m_pImmediateContext->Draw(6, 0);//Draw 3 vertices  and start at vertice 0
-		*/
 	HR(m_pSwapChain->Present(0, 0));//Display background(From buffer)
 }
 
@@ -82,5 +65,6 @@ int WINAPI WinMain(__in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, _
 	if (!tApp.Init()){//If init fails exit app
 		return 1;
 	}
+	
 	return tApp.Run();//Else run main loop
 }

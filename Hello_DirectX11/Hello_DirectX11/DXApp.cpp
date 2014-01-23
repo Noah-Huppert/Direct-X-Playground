@@ -270,13 +270,6 @@ bool DXApp::InitPipeline(){//Init the render pipeline
 	m_pImmediateContext->VSSetShader(pVS, 0, 0);
 	m_pImmediateContext->PSSetShader(pPS, 0, 0);
 
-	//For playing around
-	/*VERTEX OurVertices[] =
-	{
-		{ 0.0f, 0.5f, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ 0.45f, -0.5, 0.0f, { 0.0f, 1.0f, 1.0f, 0.0f } },
-		{ -0.45f, -0.5f, 0.0f, { 0.0f, 0.0f, 1.0f, 1.0f } }
-	};*/
 
 	//Vertex buffer description
 	ZeroMemory(&bd, sizeof(bd));//Reserve memory for Vertex buffer description
@@ -287,13 +280,6 @@ bool DXApp::InitPipeline(){//Init the render pipeline
 
 	m_pDevice->CreateBuffer(&bd, NULL, &pVBuffer);//Create vertex buffer
 	
-	/*
-	//Working with vertex buffer
-	m_pImmediateContext->Map(pVBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &ms);//Map the buffer, pVBuffer is the buffer and ms is where we will put the buffer
-	memcpy(ms.pData, OurVertices, sizeof(OurVertices));//Copy data to mapped buffer
-	m_pImmediateContext->Unmap(pVBuffer, NULL);//Unmap buffer, allowing GPU to use buffer
-	*/
-	
 	D3D11_INPUT_ELEMENT_DESC ied[] =//Describe to CPU how data is stored
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -303,18 +289,6 @@ bool DXApp::InitPipeline(){//Init the render pipeline
 	m_pDevice->CreateInputLayout(ied, 2, VS->GetBufferPointer(), VS->GetBufferSize(), &pLayout);
 	m_pImmediateContext->IASetInputLayout(pLayout);//Set layout, aply
 	
-
-	/*NEW RENDERING
-
-	ZeroMemory(&p_dynamicVBDesc, sizeof(p_dynamicVBDesc));
-	p_dynamicVBDesc.Usage = D3D11_USAGE_DYNAMIC;
-	p_dynamicVBDesc.ByteWidth = sizeof(VERTEX)* 3;//Render verticies x 3
-	p_dynamicVBDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	p_dynamicVBDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	p_dynamicVBDesc.MiscFlags = 0;
-
-	HR(m_pDevice->CreateBuffer(&p_dynamicVBDesc, NULL, &p_dynamicVB));
-	*/
 	return true;//Return true on success
 }
 
