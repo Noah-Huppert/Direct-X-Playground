@@ -1,4 +1,11 @@
-#pragma once
+#ifndef DXUTIL_DEF
+#define DXUTIL_DEF
+//Windows includes
+#include <windows.h>
+#include <string>
+#include <vector>
+
+//DirectX includes
 #include <d3d.h>//Basic directX
 #include <d3d9.h>
 #include <d3d11.h>//Basic directX 3d
@@ -48,3 +55,32 @@ namespace Memory{
 		}
 	}
 }
+
+//Data structs
+struct VECTOR3
+{
+	float X;
+	float Y;
+	float Z;
+};
+
+struct VERTEX//Vertex struct
+{
+	float X;
+	float Y;
+	float Z;//Position
+	float COLOR[4];//Color, replaces D3DXCOLOR which was just a float array with 4 entries
+
+	VERTEX translate(VECTOR3 t){
+		VERTEX v = { VERTEX::X + t.X, VERTEX::Y + t.Y, VERTEX::Z + t.Z, { VERTEX::COLOR[1], VERTEX::COLOR[2], VERTEX::COLOR[3], VERTEX::COLOR[4] } };
+		return v;
+	};
+};
+
+struct DEFAULT
+{
+	float X = 0;
+	float Y = 0;
+	float Z = 0;
+};
+#endif

@@ -186,7 +186,7 @@ bool DXApp::InitDirect3D(){//Setup DirectX 3D
 	swapDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH; //allows alt-enter fullscreen
 
 	HRESULT result;//For errors?
-	for (int i = 0; i < numDriverTypes; i++){//Loops though for each driver type finding the correct one
+	for (UINT i = 0; i < numDriverTypes; i++){//Loops though for each driver type finding the correct one
 		result = D3D11CreateDeviceAndSwapChain(
 			NULL,
 			driverTypes[i],

@@ -1,13 +1,14 @@
 #pragma once
 #define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#include <string>
+
 #include "DXUtil.h"
+
+#include "Entity.h"
+#include "RenderController.h"
 
 //Define screen res
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
-
 
 class DXApp
 {
@@ -74,20 +75,4 @@ protected://Internal functions
 
 	//Init Pipeline
 	bool InitPipeline();
-};
-
-struct VERTEX//Vertex struct
-{
-	FLOAT X;
-	FLOAT Y;
-	FLOAT Z;//Position
-	float COLOR[4];//Color, replaces D3DXCOLOR which was just a float array with 4 entries
-};
-
-
-struct VECTOR3
-{
-	float X;
-	float Y;
-	float Z;
 };
