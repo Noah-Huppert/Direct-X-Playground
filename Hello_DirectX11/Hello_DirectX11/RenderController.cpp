@@ -21,11 +21,11 @@ std::vector<VERTEX> RenderController::getVertices(){
 }
 
 int RenderController::getSize(){
-	return RenderController::entities.size()*sizeof(VERTEX);
+	return RenderController::vertices.size()*sizeof(VERTEX);
 }
 
 int RenderController::getCount(){
-	return RenderController::entities.size();
+	return RenderController::vertices.size();
 }
 
 //Setters
