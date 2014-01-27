@@ -1,0 +1,13 @@
+D3DCompile(
+		in	LPCVOID pSrcData,//Pointer to shader data
+		in	SIZE_T SrcDataSize,//Shader size
+		in_opt	LPCSTR pSourceName,//OPTIONAL, name used in error msgs
+		in_opt	const D3D_SHADER_MACRO *pDefines,//OPTIONAL,  An array of NULL-terminated macro definitions(wut?)
+		in_opt ID3DInclude *pInclude,//OPTIONAL, DONT PASS NULL, pass D3D_COMPILE_STANDARD_FILE_INCLUDE which is the defualt
+		in	LPCSTR pEntrypoint,//Name of shaders starting function
+		in	LPCSTR pTarget,//Shader target, vs_5_0 for vertex shader and ps_5_0 for pixel shader
+		in	UINT Flags1,//Shader compile options --> http://msdn.microsoft.com/en-us/library/windows/apps/gg615083(v=vs.85).aspx, set to NULL
+		in	UINT Flags2,//Shader effect compile options --> http://msdn.microsoft.com/en-us/library/windows/apps/gg615084(v=vs.85).aspx, set to 0
+		out ID3DBlob **ppCode,//Pointer to var that will hold shader
+		out_opt	IDI3DBlob **ppErrorMsgs//OPTIONAL, Pointer to var that holds error messages
+	);
