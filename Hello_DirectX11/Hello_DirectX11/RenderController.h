@@ -9,22 +9,22 @@ public:
 	RenderController(ID3D11Device * sDevice, ID3D11DeviceContext * context, D3D11_PRIMITIVE_TOPOLOGY sPrimitive);//Contructor
 
 	//Getters
-	std::vector<Entity> getEntities();
+	std::vector<Entity*> getEntities();
 	std::vector<VERTEX> getVertices();
 	int getSize();
 	int getCount();
 
 	//Setters
-	boolean setEntities(std::vector<Entity> sEntities);
+	boolean setEntities(std::vector<Entity*> sEntities);
 	boolean setVertices(std::vector<VERTEX> sVertices);
-	boolean add(Entity sEntity);
-	boolean remove(Entity sEntity);
+	boolean add(Entity * sEntity);
+	boolean remove(Entity * sEntity);
 
 	//Actions
 	boolean render();
 
 private:
-	std::vector<Entity> entities;
+	std::vector<Entity*> entities;
 	std::vector<VERTEX> vertices;
 	ID3D11Device * device;
 	ID3D11DeviceContext * context;

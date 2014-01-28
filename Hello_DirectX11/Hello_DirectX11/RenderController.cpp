@@ -16,14 +16,15 @@ RenderController::RenderController(ID3D11Device * sDevice, ID3D11DeviceContext *
 
 
 //Getters
-std::vector<Entity> RenderController::getEntities(){
+std::vector<Entity*> RenderController::getEntities(){
 	return RenderController::entities;
 }
 
 std::vector<VERTEX> RenderController::getVertices(){
 	std::vector<VERTEX> newVertices;
 	for (UINT i = 0; i < RenderController::entities.size(); i++){
-		std::vector<VERTEX> tempVertices = RenderController::entities.at(i).getVertices();
+		Entity * tempEntity = RenderController::entities.at(i);
+		std::vector<VERTEX> tempVertices = tempEntity->getVertices();
 		newVertices.insert(newVertices.end(), tempVertices.begin(), tempVertices.end());
 	}
 	
@@ -41,7 +42,7 @@ int RenderController::getCount(){
 }
 
 //Setters
-boolean RenderController::setEntities(std::vector<Entity> sEntities){
+boolean RenderController::setEntities(std::vector<Entity*> sEntities){
 	RenderController::entities = sEntities;
 	return true;
 }
@@ -51,18 +52,18 @@ boolean RenderController::setVertices(std::vector<VERTEX> sVertices){
 	return true;
 }
 
-boolean RenderController::add(Entity sEntity){
+boolean RenderController::add(Entity * sEntity){
 	RenderController::entities.push_back(sEntity);
-	sEntity.setID(RenderController::entities.size() + 1);
+	//sEntity.setID(RenderController::entities.size() + 1);
 	RenderController::getVertices();
 	return true;
 }
 
-boolean RenderController::remove(Entity sEntity){
-	std::vector<Entity> newEntities;
+boolean RenderController::remove(Entity * sEntity){
+	std::vector<Entity*> newEntities;
 	for (UINT i = 0; i < RenderController::entities.size(); i++){
-		if (RenderController::entities.at(i).getID() == sEntity.getID()){
-			sEntity.setID(-1);
+		if (RenderController::entities.at(i) == sEntity){
+			//sEntity.setID(-1);
 		}
 		else{
 			newEntities.push_back(RenderController::entities.at(i));

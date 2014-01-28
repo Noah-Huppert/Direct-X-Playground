@@ -11,9 +11,9 @@ public://Define all functions
 
 private:
 	RenderController rController;
-	Entity tEntity;
-	Entity t2Entity;
-	Entity t3Entity;
+	Entity * tEntity;
+	Entity * t2Entity;
+	Entity * t3Entity;
 };
 
 HelloDX11::HelloDX11(HINSTANCE hInstance) : DXApp(hInstance){//Custom contructor
@@ -30,19 +30,19 @@ bool HelloDX11::Init(){//Custom init function
 	}
 
 	rController = RenderController(m_pDevice, m_pImmediateContext, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	tEntity = Entity({ 0.0f, 0.0f, 0.0f }, 1.0f, 1.0f);
-	t2Entity = Entity({ 0.5f, 0.5f, 0.0f }, 0.5f, 0.5f);
-	t3Entity = Entity({ -0.5f, -0.5f, 0.0f }, 0.5f, 0.5f);
+	tEntity = new Entity({ 0.0f, 0.0f, 0.0f }, 1.0f, 1.0f);
+	t2Entity = new Entity({ 0.5f, 0.5f, 0.0f }, 0.5f, 0.5f);
+	t3Entity = new Entity({ -0.5f, -0.5f, 0.0f }, 0.5f, 0.5f);
 
 	rController.add(tEntity);
-	rController.add(t2Entity);
+	rController.add(t2Entity); 
 	rController.add(t3Entity);
 
 	return true;
 }
 
 void HelloDX11::Update(float dt){//Custom update function
-	tEntity.setPosition({ 1.0f, 1.0f, 0.0f });//Not working
+	tEntity->setPosition({ 1.0f, 1.0f, 0.0f });//Not working
 }
 
 void HelloDX11::Render(float dt){//Custom render function
