@@ -60,6 +60,34 @@ int Entity::getID(){
 	return Entity::id;
 }
 
+float Entity::getPosX(){
+	return Entity::position.X;
+}
+
+float Entity::getPosY(){
+	return Entity::position.Y;
+}
+
+float Entity::getPosZ(){
+	return Entity::position.Z;
+}
+
+float Entity::getVecX(int vIndex){
+	return Entity::vertices.at(vIndex).X;
+}
+
+float Entity::getVecY(int vIndex){
+	return Entity::vertices.at(vIndex).Y;
+}
+
+float Entity::getVecZ(int vIndex){
+	return Entity::vertices.at(vIndex).Z;
+}
+
+float* Entity::getVecColor(int vIndex){
+	return Entity::vertices.at(vIndex).COLOR;
+}
+
 
 //Setters
 boolean Entity::setPosition(VECTOR3 sPosition){
@@ -79,5 +107,43 @@ boolean Entity::setVertex(VERTEX sVertex, int sIndex){
 
 boolean Entity::setID(int sId){
 	Entity::id = sId;
+	return true;
+}
+
+boolean Entity::setPosX(float sX){
+	Entity::position.X = sX;
+	return true;
+}
+
+boolean Entity::setPosY(float sY){
+	Entity::position.Y = sY;
+	return true;
+}
+
+boolean Entity::setPosZ(float sZ){
+	Entity::position.Z = sZ;
+	return true;
+}
+
+boolean Entity::setVecX(float sX, int vIndex){
+	Entity::vertices.at(vIndex).X = sX;
+	return true;
+}
+
+boolean Entity::setVecY(float sY, int vIndex){
+	Entity::vertices.at(vIndex).Y = sY;
+	return true;
+}
+
+boolean Entity::setVecZ(float sZ, int vIndex){
+	Entity::vertices.at(vIndex).Z = sZ;
+	return true;
+}
+
+boolean Entity::setVecColor(float sColor[4], int vIndex){
+	Entity::vertices.at(vIndex).COLOR[1] = sColor[1];
+	Entity::vertices.at(vIndex).COLOR[2] = sColor[2];
+	Entity::vertices.at(vIndex).COLOR[3] = sColor[3];
+	Entity::vertices.at(vIndex).COLOR[4] = sColor[4];
 	return true;
 }
