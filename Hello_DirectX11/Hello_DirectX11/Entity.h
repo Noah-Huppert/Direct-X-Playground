@@ -16,7 +16,8 @@ public:
 	std::vector<VERTEX> getVertices();
 	int getVerticesSize();
 	int getVerticesCount();
-	int getID();
+	float getWidth();
+	float getHeight();
 	float getPosX();
 	float getPosY();
 	float getPosZ();
@@ -29,7 +30,8 @@ public:
 	virtual boolean setPosition(VECTOR3 sPosition);
 	virtual boolean setVertices(std::vector<VERTEX> sVertices);\
 	virtual boolean setVertex(VERTEX sVertex, int sIndex);
-	virtual boolean setID(int sId);
+	boolean setWidth(float sWidth);
+	boolean setHeight(float sHeight);
 	boolean setPosX(float sX);
 	boolean setPosY(float sY);
 	boolean setPosZ(float sZ);
@@ -42,6 +44,7 @@ public:
 private:
 	VECTOR3 position;
 	std::vector<VERTEX> vertices;
-	int id = -2;
+	float width;
+	float height;
 };
 #endif

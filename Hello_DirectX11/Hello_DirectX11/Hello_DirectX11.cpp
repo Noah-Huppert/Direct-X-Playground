@@ -29,7 +29,7 @@ bool HelloDX11::Init(){//Custom init function
 		return false;
 	}
 
-	rController = new RenderController(m_pDevice, m_pImmediateContext, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	rController = new RenderController(m_pDevice, m_pImmediateContext, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, SCREEN_HEIGHT / SCREEN_WIDTH);
 	tEntity = new Entity({ 0.0f, 0.0f, 0.0f }, 0.5f, 0.5f);
 	t2Entity = new Entity({ 0.1f, 0.1f, 0.0f }, 0.1f, 0.1f);
 	t3Entity = new Entity({ -0.1f, 0.1f, 0.0f }, 0.1f, 0.1f);

@@ -8,13 +8,15 @@ Entity::Entity(){
 
 Entity::Entity(VECTOR3 sPosition, float sWidth, float sHeight){//Simple contructor
 	Entity::position = sPosition;
+	Entity::width = sWidth;
+	Entity::height = sHeight;
 	Entity::vertices = {
-		{ sHeight - (sHeight * 1.5f), sWidth / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ sHeight / 2, sWidth / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ sHeight / 2, sWidth - (sWidth * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ sHeight / 2, sWidth - (sWidth * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ sHeight - (sHeight * 1.5f), sWidth - (sWidth * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ sHeight - (sHeight * 1.5f), sWidth / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } }
+		{ Entity::height - (Entity::height * 1.5f), Entity::width / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::height / 2, Entity::width / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::height / 2, Entity::width - (Entity::width * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::height / 2, Entity::width - (Entity::width * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::height - (Entity::height * 1.5f), Entity::width - (Entity::width * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::height - (Entity::height * 1.5f), Entity::width / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } }
 	};
 }
 
@@ -56,8 +58,12 @@ int Entity::getVerticesCount(){
 	return Entity::vertices.size();
 }
 
-int Entity::getID(){
-	return Entity::id;
+float Entity::getWidth(){
+	return Entity::width;
+}
+
+float Entity::getHeight(){
+	return Entity::height;
 }
 
 float Entity::getPosX(){
@@ -105,8 +111,13 @@ boolean Entity::setVertex(VERTEX sVertex, int sIndex){
 	return true;
 }
 
-boolean Entity::setID(int sId){
-	Entity::id = sId;
+boolean Entity::setWidth(float sWidth){
+	Entity::width = sWidth;
+	return true;
+}
+
+boolean Entity::setHeight(float sHeight){
+	Entity::height = sHeight;
 	return true;
 }
 

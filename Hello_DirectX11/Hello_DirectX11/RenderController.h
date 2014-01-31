@@ -6,7 +6,7 @@
 class RenderController{
 public:
 	RenderController();//Def constructor
-	RenderController(ID3D11Device * sDevice, ID3D11DeviceContext * context, D3D11_PRIMITIVE_TOPOLOGY sPrimitive);//Contructor
+	RenderController(ID3D11Device * sDevice, ID3D11DeviceContext * context, D3D11_PRIMITIVE_TOPOLOGY sPrimitive, float sAspectRatio);//Contructor
 
 	//Getters
 	std::vector<Entity*> getEntities();
@@ -26,6 +26,7 @@ public:
 private:
 	std::vector<Entity*> entities;
 	std::vector<VERTEX> vertices;
+	float aspectRatio;
 	ID3D11Device * device;
 	ID3D11DeviceContext * context;
 	D3D11_PRIMITIVE_TOPOLOGY primitive;

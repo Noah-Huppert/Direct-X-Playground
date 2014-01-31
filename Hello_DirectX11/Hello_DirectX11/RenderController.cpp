@@ -5,10 +5,11 @@ RenderController::RenderController(){
 
 }
 
-RenderController::RenderController(ID3D11Device * sDevice, ID3D11DeviceContext * sContext, D3D11_PRIMITIVE_TOPOLOGY sPrimitive){
+RenderController::RenderController(ID3D11Device * sDevice, ID3D11DeviceContext * sContext, D3D11_PRIMITIVE_TOPOLOGY sPrimitive, float sAspectRatio){
 	RenderController::device = sDevice;
 	RenderController::context = sContext;
 	RenderController::primitive = sPrimitive;
+	RenderController::aspectRatio = 800/600;
 
 	RenderController::stride = sizeof(VERTEX);//Size of VERTEX
 	RenderController::offset = 0;//Offset in which we start reading VERTEX bytes
@@ -24,6 +25,7 @@ std::vector<VERTEX> RenderController::getVertices(){
 	std::vector<VERTEX> newVertices;
 	for (UINT i = 0; i < RenderController::entities.size(); i++){
 		Entity * tempEntity = RenderController::entities.at(i);
+		tempEntity->setWidth(tempEntity->getWidth() / RenderController::aspectRatio);
 		std::vector<VERTEX> tempVertices = tempEntity->getVertices();
 		newVertices.insert(newVertices.end(), tempVertices.begin(), tempVertices.end());
 	}
