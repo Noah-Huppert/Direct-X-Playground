@@ -6,22 +6,22 @@ Entity::Entity(){
 
 }
 
-Entity::Entity(VECTOR3 sPosition, float sWidth, float sHeight){//Simple contructor
-	Entity::position = sPosition;
+Entity::Entity(float sX, float sY, float sZ, float sWidth, float sHeight){//Simple contructor
+	Entity::position = {sX, sY, sZ};
 	Entity::width = sWidth;
 	Entity::height = sHeight;
 	Entity::vertices = {
-		{ Entity::height - (Entity::height * 1.5f), Entity::width / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ Entity::height / 2, Entity::width / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ Entity::height / 2, Entity::width - (Entity::width * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ Entity::height / 2, Entity::width - (Entity::width * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ Entity::height - (Entity::height * 1.5f), Entity::width - (Entity::width * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
-		{ Entity::height - (Entity::height * 1.5f), Entity::width / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } }
+		{ Entity::width - (Entity::width * 1.5f), Entity::height / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width / 2, Entity::height / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width / 2, Entity::height - (Entity::height * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width / 2, Entity::height - (Entity::height * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width - (Entity::width * 1.5f), Entity::height - (Entity::height * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width - (Entity::width * 1.5f), Entity::height / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } }
 	};
 }
 
-Entity::Entity(VECTOR3 sPosition, std::vector<VERTEX> sVertices){//Complex contructor
-	Entity::position = sPosition;
+Entity::Entity(float sX, float sY, float sZ, std::vector<VERTEX> sVertices){//Complex contructor
+	Entity::position = { sX, sY, sZ };
 	Entity::vertices = sVertices;
 }
 
@@ -113,11 +113,29 @@ boolean Entity::setVertex(VERTEX sVertex, int sIndex){
 
 boolean Entity::setWidth(float sWidth){
 	Entity::width = sWidth;
+	Entity::vertices.clear();
+	Entity::vertices = {
+		{ Entity::width - (Entity::width * 1.5f), Entity::height / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width / 2, Entity::height / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width / 2, Entity::height - (Entity::height * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width / 2, Entity::height - (Entity::height * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width - (Entity::width * 1.5f), Entity::height - (Entity::height * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width - (Entity::width * 1.5f), Entity::height / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } }
+	};
 	return true;
 }
 
 boolean Entity::setHeight(float sHeight){
 	Entity::height = sHeight;
+	Entity::vertices.clear();
+	Entity::vertices = {
+		{ Entity::width - (Entity::width * 1.5f), Entity::height / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width / 2, Entity::height / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width / 2, Entity::height - (Entity::height * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width / 2, Entity::height - (Entity::height * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width - (Entity::width * 1.5f), Entity::height - (Entity::height * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
+		{ Entity::width - (Entity::width * 1.5f), Entity::height / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } }
+	};
 	return true;
 }
 

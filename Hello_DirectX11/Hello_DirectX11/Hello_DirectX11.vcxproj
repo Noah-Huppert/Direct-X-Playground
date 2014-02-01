@@ -72,6 +72,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DXApp.cpp" />
     <ClCompile Include="DXERR\dxerr.cpp" />
     <ClCompile Include="DXUtil.cpp" />
@@ -80,6 +81,7 @@
     <ClCompile Include="RenderController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="DXApp.h" />
     <ClInclude Include="DXERR\dxerr.h" />
     <ClInclude Include="DXUtil.h" />

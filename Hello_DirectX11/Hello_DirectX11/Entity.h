@@ -8,8 +8,8 @@ class DXUtil;
 class Entity{
 public:
 	Entity();//Def contructor
-	Entity(VECTOR3 sPosition, float sWidth, float sHeight);//Simple square contructor
-	Entity(VECTOR3 sPosition, std::vector<VERTEX> sVertices);//Complex constructor
+	Entity(float sX, float sY, float sZ, float sWidth, float sHeight);//Simple square contructor
+	Entity(float sX, float sY, float sZ, std::vector<VERTEX> sVertices);//Complex constructor
 
 	//Getters
 	VECTOR3 getPosition();

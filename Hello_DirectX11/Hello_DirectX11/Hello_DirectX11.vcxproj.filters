@@ -31,6 +31,9 @@
     <Filter Include="Model\RenderController">
       <UniqueIdentifier>{ce6d4705-443a-4894-ac60-960ae88b9db1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\Camera">
+      <UniqueIdentifier>{9468b9fc-16ed-4092-8822-d7a2d9627424}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DXERR\dxerr.cpp">
@@ -51,6 +54,9 @@
     <ClCompile Include="RenderController.cpp">
       <Filter>Model\RenderController</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Model\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DXERR\dxerr.h">
@@ -67,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="RenderController.h">
       <Filter>Model\RenderController</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Model\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

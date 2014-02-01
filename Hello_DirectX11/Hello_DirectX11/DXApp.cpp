@@ -29,6 +29,8 @@ DXApp::DXApp(HINSTANCE hInstance)//Init vars
 	m_pSwapChain = nullptr;
 	m_pRenderTargetView = nullptr;
 
+	m_screenWidth = 800.0f;
+	m_screenHeight = 600.0f;
 	dt = 0.0f;
 }
 
@@ -113,7 +115,7 @@ bool DXApp::InitWindow(){//Shows win32 window
 	}
 
 	//Adjust height to acomidate top bar
-	RECT r = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+	RECT r = { 0, 0, m_screenWidth, m_screenHeight };
 	AdjustWindowRect(&r, m_WndStyle, FALSE);
 	UINT width = r.right - r.left;
 	UINT height = r.bottom - r.top;
@@ -174,8 +176,8 @@ bool DXApp::InitDirect3D(){//Setup DirectX 3D
 	DXGI_SWAP_CHAIN_DESC swapDesc;//Setting up buffer
 	ZeroMemory(&swapDesc, sizeof(DXGI_SWAP_CHAIN_DESC));//Make space for swapchain desc
 	swapDesc.BufferCount = 1;//Double buffer(While 1 frame is being displayed render another) uses array counting where 0 = 1
-	swapDesc.BufferDesc.Width = SCREEN_WIDTH;//Set up render width
-	swapDesc.BufferDesc.Height = SCREEN_HEIGHT;//Set up render height
+	swapDesc.BufferDesc.Width = m_screenWidth;//Set up render width
+	swapDesc.BufferDesc.Height = m_screenHeight;//Set up render height
 	swapDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;//Set color endcoding(Or something like that)
 	swapDesc.BufferDesc.RefreshRate.Numerator = 60;//60 FPS
 	swapDesc.BufferDesc.RefreshRate.Denominator = 1;//Minimum FPS
@@ -224,8 +226,8 @@ bool DXApp::InitDirect3D(){//Setup DirectX 3D
 
 	//Viewport creation
 	//Create Direct X viewport on window
-	m_Viewport.Width = static_cast<float>(SCREEN_WIDTH);//Sets viewport width
-	m_Viewport.Height = static_cast<float>(SCREEN_HEIGHT);//Sets viewport height
+	m_Viewport.Width = static_cast<float>(m_screenWidth);//Sets viewport width
+	m_Viewport.Height = static_cast<float>(m_screenHeight);//Sets viewport height
 	m_Viewport.TopLeftX = 0;//Sets viewport to start in left
 	m_Viewport.TopLeftY = 0;//Sets viewport to start in top
 	m_Viewport.MinDepth = 0.0f;//Min depth
@@ -305,4 +307,26 @@ LRESULT DXApp::MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){//Reci
 		default://Do nothing
 			return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
+}
+
+
+//Getters
+float DXApp::getScreenWidth(){
+	return DXApp::m_screenWidth;
+}
+
+float DXApp::getScreenHeight(){
+	return DXApp::m_screenHeight;
+}
+
+
+//Setters
+boolean DXApp::setScreenWidth(float sWidth){
+	DXApp::m_screenWidth = sWidth;
+	return true;
+}
+
+boolean DXApp::setScreenHeight(float sHeight){
+	DXApp::m_screenHeight = sHeight;
+	return true;
 }

@@ -6,10 +6,6 @@
 #include "Entity.h"
 #include "RenderController.h"
 
-//Define screen res
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
-
 class DXApp
 {
 public:
@@ -25,6 +21,13 @@ public:
 	virtual void Render(float dt) = 0;//dt = delta time
 	virtual LRESULT MsgProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+	//Getters
+	float getScreenWidth();
+	float getScreenHeight();
+
+	//Setters
+	boolean setScreenWidth(float sWidth);
+	boolean setScreenHeight(float sHeight);
 
 protected://Internal Vars
 	//WIN32 Attrs
@@ -59,6 +62,8 @@ protected://Internal Vars
 	ID3D11InputLayout *pLayout;//Describing layout of vertex struct
 
 	//Game vars
+	float m_screenWidth;
+	float m_screenHeight;
 	float dt;//Detla time
 
 protected://Internal functions

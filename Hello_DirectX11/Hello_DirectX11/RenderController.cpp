@@ -9,7 +9,7 @@ RenderController::RenderController(ID3D11Device * sDevice, ID3D11DeviceContext *
 	RenderController::device = sDevice;
 	RenderController::context = sContext;
 	RenderController::primitive = sPrimitive;
-	RenderController::aspectRatio = 800/600;
+	RenderController::aspectRatio = 1.3f;
 
 	RenderController::stride = sizeof(VERTEX);//Size of VERTEX
 	RenderController::offset = 0;//Offset in which we start reading VERTEX bytes
@@ -24,9 +24,10 @@ std::vector<Entity*> RenderController::getEntities(){
 std::vector<VERTEX> RenderController::getVertices(){
 	std::vector<VERTEX> newVertices;
 	for (UINT i = 0; i < RenderController::entities.size(); i++){
-		Entity * tempEntity = RenderController::entities.at(i);
-		tempEntity->setWidth(tempEntity->getWidth() / RenderController::aspectRatio);
-		std::vector<VERTEX> tempVertices = tempEntity->getVertices();
+		Entity tempEntity = *RenderController::entities.at(i);
+		tempEntity.setPosX(tempEntity.getPosX() / RenderController::aspectRatio);
+		tempEntity.setWidth(tempEntity.getWidth() / RenderController::aspectRatio);
+		std::vector<VERTEX> tempVertices = tempEntity.getVertices();
 		newVertices.insert(newVertices.end(), tempVertices.begin(), tempVertices.end());
 	}
 	
@@ -65,7 +66,7 @@ boolean RenderController::remove(Entity * sEntity){
 	std::vector<Entity*> newEntities;
 	for (UINT i = 0; i < RenderController::entities.size(); i++){
 		if (RenderController::entities.at(i) == sEntity){
-			//sEntity.setID(-1);
+			
 		}
 		else{
 			newEntities.push_back(RenderController::entities.at(i));
