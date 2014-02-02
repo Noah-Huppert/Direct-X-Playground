@@ -9,7 +9,8 @@ RenderController::RenderController(ID3D11Device * sDevice, ID3D11DeviceContext *
 	RenderController::device = sDevice;
 	RenderController::context = sContext;
 	RenderController::primitive = sPrimitive;
-	RenderController::aspectRatio = 1.3f;
+	RenderController::aspectRatio = sAspectRatio;
+	RenderController::position = { 0.0f, 0.0f, 0.0f };
 
 	RenderController::stride = sizeof(VERTEX);//Size of VERTEX
 	RenderController::offset = 0;//Offset in which we start reading VERTEX bytes
@@ -27,13 +28,36 @@ std::vector<VERTEX> RenderController::getVertices(){
 		Entity tempEntity = *RenderController::entities.at(i);
 		tempEntity.setPosX(tempEntity.getPosX() / RenderController::aspectRatio);
 		tempEntity.setWidth(tempEntity.getWidth() / RenderController::aspectRatio);
+
 		std::vector<VERTEX> tempVertices = tempEntity.getVertices();
-		newVertices.insert(newVertices.end(), tempVertices.begin(), tempVertices.end());
+		std::vector<VERTEX> transformResults;
+
+		for (int x = 0; x < tempVertices.size(); x++){
+			VERTEX tempVertex = tempVertices.at(x);
+			VERTEX setVertex = {
+					tempVertex.X + RenderController::position.X,
+					tempVertex.Y + RenderController::position.Y,
+					tempVertex.Z + RenderController::position.Z,
+					{
+						tempVertex.COLOR[0],
+						tempVertex.COLOR[1],
+						tempVertex.COLOR[2],
+						tempVertex.COLOR[3]
+					}
+			};
+			transformResults.push_back(setVertex);
+		}
+
+		newVertices.insert(newVertices.end(), transformResults.begin(), transformResults.end());
 	}
 	
 	RenderController::vertices = newVertices;
 
 	return RenderController::vertices;
+}
+
+VECTOR3 RenderController::getPosition(){
+	return RenderController::position;
 }
 
 int RenderController::getSize(){
@@ -55,10 +79,23 @@ boolean RenderController::setVertices(std::vector<VERTEX> sVertices){
 	return true;
 }
 
+boolean RenderController::setPosition(float sX, float sY, float sZ){
+	RenderController::position = { sX, sY, sZ };
+	return true;
+}
+
 boolean RenderController::add(Entity * sEntity){
-	RenderController::entities.push_back(sEntity);
-	//sEntity.setID(RenderController::entities.size() + 1);
-	RenderController::getVertices();
+	boolean inVector = false;
+	for (UINT i = 0; i < RenderController::entities.size(); i++){
+		if (RenderController::entities.at(i) == sEntity){
+			inVector = true;
+		}
+	}
+
+	if (inVector == false){
+		RenderController::entities.push_back(sEntity);
+		RenderController::getVertices();
+	}
 	return true;
 }
 
@@ -91,7 +128,6 @@ boolean RenderController::render(){
 	RenderController::device->CreateBuffer(&(RenderController::bd), NULL, &(RenderController::pVBuffer));//Create vertex buffer
 
 	//Actual rendering
-
 	RenderController::context->Map(pVBuffer, NULL, D3D11_MAP_WRITE_DISCARD, NULL, &(RenderController::ms));//Map the buffer, pVBuffer is the buffer and ms is where we will put the buffer
 	memcpy(RenderController::ms.pData, &(RenderController::getVertices()[0]), RenderController::getSize());//Copy data to mapped buffer
 	RenderController::context->Unmap(pVBuffer, NULL);//Unmap buffer, allowing GPU to use buffer

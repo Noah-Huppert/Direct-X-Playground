@@ -5,6 +5,7 @@
 
 #include "Entity.h"
 #include "RenderController.h"
+#include "Camera.h"
 
 class DXApp
 {

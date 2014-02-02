@@ -10,6 +10,7 @@ public://Define all functions
 	void Render(float dt) override;//Defines Render function, input is delta time, time used for animations and physics
 
 private:
+	Camera * camera;
 	RenderController * rController;
 	Entity * tEntity;
 	Entity * t2Entity;
@@ -29,7 +30,9 @@ bool HelloDX11::Init(){//Custom init function
 		return false;
 	}
 
-	rController = new RenderController(m_pDevice, m_pImmediateContext, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, HelloDX11::getScreenHeight() / HelloDX11::getScreenHeight());
+	camera = new Camera();
+	rController = new RenderController(m_pDevice, m_pImmediateContext, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, HelloDX11::getScreenWidth() / HelloDX11::getScreenHeight());
+	camera->add(rController);
 	tEntity = new Entity(0.0f, 0.0f, 0.0f, 0.1f, 0.1f);
 	t2Entity = new Entity(0.1f, 0.1f, 0.0f, 0.1f, 0.1f);
 	t3Entity = new Entity(-0.1f, 0.1f, 0.0f, 0.1f, 0.1f);
@@ -42,13 +45,13 @@ bool HelloDX11::Init(){//Custom init function
 }
 
 void HelloDX11::Update(float dt){//Custom update function
-	//tEntity->setPosition({tEntity->getPosX() + 0.0001f, 0.0f, 0.0f });
+	camera->setPosX(camera->getPosX() + 0.0001f);
 }
 
 void HelloDX11::Render(float dt){//Custom render function
 	m_pImmediateContext->ClearRenderTargetView(m_pRenderTargetView, DirectX::Colors::CornflowerBlue);//Clear background to blue
 
-	rController->render();
+	camera->render();
 
 	HR(m_pSwapChain->Present(0, 0));//Display background(From buffer)
 }

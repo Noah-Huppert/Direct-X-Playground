@@ -11,12 +11,14 @@ public:
 	//Getters
 	std::vector<Entity*> getEntities();
 	std::vector<VERTEX> getVertices();
+	VECTOR3 getPosition();
 	int getSize();
 	int getCount();
 
 	//Setters
 	boolean setEntities(std::vector<Entity*> sEntities);
 	boolean setVertices(std::vector<VERTEX> sVertices);
+	boolean setPosition(float sX, float sY, float sZ);
 	boolean add(Entity * sEntity);
 	boolean remove(Entity * sEntity);
 
@@ -26,6 +28,7 @@ public:
 private:
 	std::vector<Entity*> entities;
 	std::vector<VERTEX> vertices;
+	VECTOR3 position;
 	float aspectRatio;
 	ID3D11Device * device;
 	ID3D11DeviceContext * context;
