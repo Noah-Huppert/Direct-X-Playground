@@ -6,8 +6,9 @@ Entity::Entity(){
 
 }
 
-Entity::Entity(float sX, float sY, float sZ, float sWidth, float sHeight){//Simple contructor
-	Entity::position = {sX, sY, sZ};
+Entity::Entity(float sX, float sY, float sZ, float sRX, float sRY, float sRZ, float sWidth, float sHeight){//Simple contructor
+	Entity::position = { sX, sY, sZ };
+	Entity::rotation = { sRX, sRY, sRZ };
 	Entity::width = sWidth;
 	Entity::height = sHeight;
 	Entity::vertices = {
@@ -18,11 +19,39 @@ Entity::Entity(float sX, float sY, float sZ, float sWidth, float sHeight){//Simp
 		{ Entity::width - (Entity::width * 1.5f), Entity::height - (Entity::height * 1.5f), 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } },
 		{ Entity::width - (Entity::width * 1.5f), Entity::height / 2, 0.0f, { 0.0f, 1.0f, 0.0f, 1.0f } }
 	};
+
+
+	float tempCenterX = 0;
+	float tempCenterY = 0;
+
+	for (UINT i = 0; i < Entity::vertices.size(); i++){
+		tempCenterX += Entity::vertices.at(i).X;
+		tempCenterY += Entity::vertices.at(i).Y;
+	}
+
+	tempCenterX = tempCenterX / Entity::vertices.size();
+	tempCenterY = tempCenterY / Entity::vertices.size();
+
+	Entity::centerPoint = { tempCenterX, tempCenterY, 0.0f };
 }
 
-Entity::Entity(float sX, float sY, float sZ, std::vector<VERTEX> sVertices){//Complex contructor
+Entity::Entity(float sX, float sY, float sZ, float sRX, float sRY, float sRZ, std::vector<VERTEX> sVertices){//Complex contructor
 	Entity::position = { sX, sY, sZ };
+	Entity::rotation = { sRX, sRY, sRZ };
 	Entity::vertices = sVertices;
+
+	float tempCenterX = 0;
+	float tempCenterY = 0;
+
+	for (UINT i = 0; i < Entity::vertices.size(); i++){
+		tempCenterX += Entity::vertices.at(i).X;
+		tempCenterY += Entity::vertices.at(i).Y;
+	}
+
+	tempCenterX = tempCenterX / Entity::vertices.size();
+	tempCenterY = tempCenterY / Entity::vertices.size();
+
+	Entity::centerPoint = { tempCenterX, tempCenterY, 0.0f };
 }
 
 

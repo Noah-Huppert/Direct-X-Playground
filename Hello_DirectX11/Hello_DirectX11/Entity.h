@@ -8,8 +8,8 @@ class DXUtil;
 class Entity{
 public:
 	Entity();//Def contructor
-	Entity(float sX, float sY, float sZ, float sWidth, float sHeight);//Simple square contructor
-	Entity(float sX, float sY, float sZ, std::vector<VERTEX> sVertices);//Complex constructor
+	Entity(float sX, float sY, float sZ, float sRX, float sRY, float sRZ, float sWidth, float sHeight);//Simple square contructor
+	Entity(float sX, float sY, float sZ, float sRX, float sRY, float sRZ, std::vector<VERTEX> sVertices);//Complex constructor
 
 	//Getters
 	VECTOR3 getPosition();
@@ -44,6 +44,8 @@ public:
 private:
 	VECTOR3 position;
 	std::vector<VERTEX> vertices;
+	VECTOR3 rotation;
+	VECTOR3 centerPoint;
 	float width;
 	float height;
 };
