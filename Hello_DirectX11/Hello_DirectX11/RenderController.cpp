@@ -26,7 +26,7 @@ std::vector<VERTEX> RenderController::getVertices(){
 	std::vector<VERTEX> newVertices;
 	for (UINT i = 0; i < RenderController::entities.size(); i++){
 		Entity tempEntity = *RenderController::entities.at(i);
-		tempEntity.setPosX(tempEntity.getPosX() / RenderController::aspectRatio);
+		//tempEntity.setPosX(tempEntity.getPosX() / RenderController::aspectRatio);//SHOULD THIS BE HERE? IT DOESNT DO ANYTHING
 		tempEntity.setWidth(tempEntity.getWidth() / RenderController::aspectRatio);
 
 		std::vector<VERTEX> tempVertices = tempEntity.getVertices();

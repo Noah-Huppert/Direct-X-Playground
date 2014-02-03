@@ -8,11 +8,12 @@ class DXUtil;
 class Entity{
 public:
 	Entity();//Def contructor
-	Entity(float sX, float sY, float sZ, float sRX, float sRY, float sRZ, float sWidth, float sHeight);//Simple square contructor
-	Entity(float sX, float sY, float sZ, float sRX, float sRY, float sRZ, std::vector<VERTEX> sVertices);//Complex constructor
+	Entity(float sX, float sY, float sZ, float sR, float sWidth, float sHeight);//Simple square contructor
+	Entity(float sX, float sY, float sZ, float sR, std::vector<VERTEX> sVertices);//Complex constructor
 
 	//Getters
 	VECTOR3 getPosition();
+	float getRotation();
 	std::vector<VERTEX> getVertices();
 	int getVerticesSize();
 	int getVerticesCount();
@@ -25,10 +26,12 @@ public:
 	float getVecY(int vIndex);
 	float getVecZ(int vIndex);
 	float* getVecColor(int vIndex);
+	VECTOR3 getCenterPoint();
 
 	//Setters
-	virtual boolean setPosition(VECTOR3 sPosition);
-	virtual boolean setVertices(std::vector<VERTEX> sVertices);\
+	virtual boolean setPosition(float sX, float sY, float sZ);
+	virtual boolean setRotation(float sR);
+	virtual boolean setVertices(std::vector<VERTEX> sVertices);
 	virtual boolean setVertex(VERTEX sVertex, int sIndex);
 	boolean setWidth(float sWidth);
 	boolean setHeight(float sHeight);
@@ -39,12 +42,16 @@ public:
 	boolean setVecY(float sY, int vIndex);
 	boolean setVecZ(float sZ, int vIndex);
 	boolean setVecColor(float sColor[4], int vIndex);
+	boolean setCenterPoint(float sX, float sY, float sZ);
 
+
+	//Actions
+	boolean calcVertices();
 
 private:
 	VECTOR3 position;
 	std::vector<VERTEX> vertices;
-	VECTOR3 rotation;
+	float rotation;
 	VECTOR3 centerPoint;
 	float width;
 	float height;

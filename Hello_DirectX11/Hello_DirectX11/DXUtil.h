@@ -4,6 +4,8 @@
 #include <windows.h>
 #include <string>
 #include <vector>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 //DirectX includes
 #include <d3d.h>//Basic directX

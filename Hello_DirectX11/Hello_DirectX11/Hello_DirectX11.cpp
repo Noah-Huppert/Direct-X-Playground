@@ -33,12 +33,12 @@ bool HelloDX11::Init(){//Custom init function
 	camera = new Camera();
 	rController = new RenderController(m_pDevice, m_pImmediateContext, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, HelloDX11::getScreenWidth() / HelloDX11::getScreenHeight());
 	camera->add(rController);
-	tEntity = new Entity(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f);
-	t2Entity = new Entity(0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f);
-	t3Entity = new Entity(-0.1f, 0.1f, 0.0f, 0.0f, 0.0f, 0.0f, 0.1f, 0.1f);
+	tEntity = new Entity(0.0f, 0.0f, 0.0f, 90.0f, 0.1f, 0.1f);
+	t2Entity = new Entity(0.1f, -0.1f, 0.0f, 30.0f, 0.1f, 0.1f);
+	t3Entity = new Entity(-0.1f, 0.1f, 0.0f, 10.0f, 0.1f, 0.1f);
 
-	rController->add(tEntity);
 	rController->add(t2Entity);
+	rController->add(tEntity);
 	rController->add(t3Entity);
 
 	return true;
