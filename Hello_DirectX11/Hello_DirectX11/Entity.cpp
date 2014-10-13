@@ -79,8 +79,13 @@ std::vector<VERTEX> Entity::getVertices(){
 	//Rotation
 	std::vector<VERTEX> rotationResults;
 	for (int x = 0; x < transformResults.size(); x++){
+		Entity::calcVertices();
+		/*
+		transformResults.at(x).X * cos(dRotation) - transformResults.at(x).Y * sin(dRotation),
+		transformResults.at(x).X * sin(dRotation) + transformResults.at(x).Y * cos(dRotation)
+		*/
 		float dRotation = Entity::rotation * (M_PI / 180);//Turns into radiens
-		VERTEX tempVertex = {
+		VERTEX tempVertex = { 
 			cos(dRotation) * (transformResults.at(x).X - Entity::centerPoint.X) - sin(dRotation) * (transformResults.at(x).Y - Entity::centerPoint.Y) + Entity::centerPoint.X,
 			sin(dRotation) * (transformResults.at(x).X - Entity::centerPoint.X) + cos(dRotation) * (transformResults.at(x).Y - Entity::centerPoint.Y) + Entity::centerPoint.Y,
 			transformResults.at(x).Z,

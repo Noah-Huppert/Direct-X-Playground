@@ -189,7 +189,7 @@ bool DXApp::InitDirect3D(){//Setup DirectX 3D
 	swapDesc.SampleDesc.Quality = 0;//Set quallity to 0, or just shutting it off, this is because this feature can slow down rendering
 	swapDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH; //allows alt-enter fullscreen
 
-	HRESULT result;//For errors?
+	HRESULT result;//For errors
 	for (UINT i = 0; i < numDriverTypes; i++){//Loops though for each driver type finding the correct one
 		result = D3D11CreateDeviceAndSwapChain(
 			NULL,

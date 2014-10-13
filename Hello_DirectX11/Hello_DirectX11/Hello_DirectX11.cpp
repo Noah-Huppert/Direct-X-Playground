@@ -38,14 +38,14 @@ bool HelloDX11::Init(){//Custom init function
 	t3Entity = new Entity(-0.1f, 0.1f, 0.0f, 10.0f, 0.1f, 0.1f);
 
 	rController->add(t2Entity);
-	rController->add(tEntity);
-	rController->add(t3Entity);
+	//rController->add(tEntity);
+	//rController->add(t3Entity);
 
 	return true;
 }
 
 void HelloDX11::Update(float dt){//Custom update function
-	camera->setPosX(camera->getPosX() + 0.0001f);
+	//camera->setPosX(camera->getPosX() + 0.0001f);
 }
 
 void HelloDX11::Render(float dt){//Custom render function
